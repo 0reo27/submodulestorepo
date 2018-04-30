@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+    <!-- Authors Here -->
+    <remote name="topjohnwu" fetch="https://github.com/topjohnwu/" />
+    <!-- Main Project Here -->
+    <project path="Magisk" name="Magisk" remote="topjohnwu" revision="master" />
+    <!-- Automatically generated -->
+    <!-- Required to edit revision -->
+    @@include('./tmp/.gitmodules')
+</manifest>
