@@ -28,7 +28,7 @@ gulp.task('wipe', function () {
     ]);
 });
 
-
+// Generate XML formatted .gitmodules file.
 gulp.task('buildXml', function () {
     return remoteSrc(['.gitmodules'], {
             base: 'https://raw.githubusercontent.com/topjohnwu/Magisk/master/'
@@ -47,17 +47,7 @@ gulp.task('buildXml', function () {
         .pipe(replace(/\/ (.+") /g, "\""))
         .pipe(replace(/\/>/g, " revision=\"\"\/>"))
         .pipe(replace(/path="/g, "path=\"Magisk/"))
-
         .pipe(gulp.dest('tmp'));
-});
-
-gulp.task('inject', ['buildXml'], function () {
-    return gulp.src('default.xml')
-        .pipe(fileinclude({
-            prefix: '@@',
-            basepath: '@root'
-        }))
-        .pipe(gulp.dest('out'))
 });
 
 gulp.task('cloneRepo', shell.task([
@@ -81,12 +71,21 @@ gulp.task('submoduleSanitize', function () {
         .pipe(gulp.dest('tmp'));
 });
 
+gulp.task('injectToOut', function () {
+    return gulp.src('default.xml')
+        .pipe(fileinclude({
+            prefix: '@@',
+            basepath: '@root'
+        }))
+        .pipe(gulp.dest('out'))
+});
+
 gulp.task('default', function (callback) {
     runSequence(
         'wipe',
         // 'cloneRepo',
         'submoduleSanitize',
         'buildXml',
-        // 'inject',
+        'injectToOut',
         callback);
 });
