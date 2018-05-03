@@ -22,6 +22,7 @@
     "gulp-file-include": "^2.0.1",
     "gulp-remote-src": "^0.4.3",
     "gulp-replace": "^0.6.1",
+    "gulp-shell": "^0.6.5",
     "run-sequence": "^2.2.1"
   },
   "dependencies": {}

@@ -1,0 +1,30 @@
+Entering 'app'
+* (detached from 15ed3e5)
+  master
+Entering 'native/jni/external/busybox'
+* (detached from 4f5bf4a)
+  android-ndk-1.28.3
+Entering 'native/jni/external/bzip2'
+* (detached from 67d8185)
+  master
+Entering 'native/jni/external/dtc'
+* (detached from e543880)
+  master
+Entering 'native/jni/external/lz4'
+* (detached from dfed9fa)
+  dev
+Entering 'native/jni/external/nanopb'
+* (detached from 04cd1f9)
+  master
+Entering 'native/jni/external/selinux'
+* (detached from 4d28de8)
+  android
+Entering 'native/jni/external/xz'
+* (detached from 3d566cd)
+  master
+Entering 'native/jni/magiskpolicy'
+* (detached from c694776)
+  master
+Entering 'native/jni/su'
+* (detached from 42eab87)
+  master

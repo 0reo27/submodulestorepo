@@ -6,7 +6,8 @@ const
     replace = require('gulp-replace'),
     fileinclude = require('gulp-file-include'),
     runSequence = require('run-sequence'),
-    del = require('del');
+    del = require('del'),
+    shell = require('gulp-shell');
 
 const
     // Place gitmodules URL here.
@@ -22,7 +23,8 @@ gutil.log('The author is ' + repoAuthor + ' and the repo is ' + repoName);
 gulp.task('wipe', function () {
     return del([
         'wipe',
-        'tmp'
+        'tmp',
+        'Magisk'
     ]);
 });
 
@@ -45,7 +47,7 @@ gulp.task('buildXml', function () {
         .pipe(replace(/\/ (.+") /g, "\""))
         .pipe(replace(/\/>/g, " revision=\"\"\/>"))
         .pipe(replace(/path="/g, "path=\"Magisk/"))
-        
+
         .pipe(gulp.dest('tmp'));
 });
 
@@ -58,10 +60,33 @@ gulp.task('inject', ['buildXml'], function () {
         .pipe(gulp.dest('out'))
 });
 
+gulp.task('cloneRepo', shell.task([
+    // 'git clone https://github.com/topjohnwu/Magisk.git --recurse-submodules',
+    'dir',
+    'cd Magisk',
+    'git submodule foreach \'git branch\'',
+    'echo hi'
+]))
+
+
+gulp.task('submoduleSanitize', function () {
+    // Generated results.txt in a Linux system with Clone Repo task commands.
+    return gulp.src('results.txt')
+        .pipe(replace(/Entering /g, ''))
+        .pipe(replace(/\r\n\*|\r\*|\n\* /g, ''))
+        .pipe(replace(/\(detached from .......\)/g, ''))
+        .pipe(replace(/\' \r\n |\' \r |\' \n /g, ''))
+        .pipe(replace(/'/g, ''))
+        // .pipe(replace(/.* /g, ''))
+        .pipe(gulp.dest('tmp'));
+});
+
 gulp.task('default', function (callback) {
     runSequence(
         'wipe',
+        // 'cloneRepo',
+        'submoduleSanitize',
         'buildXml',
-        'inject',
+        // 'inject',
         callback);
 });
